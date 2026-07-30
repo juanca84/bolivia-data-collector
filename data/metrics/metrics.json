@@ -1,0 +1,56 @@
+[
+  {
+    "timestamp": "2026-07-30T15:21:35.430160-04:00",
+    "provider": "senamhi",
+    "endpoint": "diario",
+    "duration_ms": 1719.6,
+    "size_bytes": 32962,
+    "changed": true,
+    "success": true
+  },
+  {
+    "timestamp": "2026-07-30T15:21:35.474823-04:00",
+    "provider": "senamhi",
+    "endpoint": "ediario",
+    "duration_ms": 1192.2,
+    "size_bytes": 72386,
+    "changed": true,
+    "success": true
+  },
+  {
+    "timestamp": "2026-07-30T15:21:43.349008-04:00",
+    "provider": "senamhi",
+    "endpoint": "diario",
+    "duration_ms": 1301.6,
+    "size_bytes": 32962,
+    "changed": false,
+    "success": true
+  },
+  {
+    "timestamp": "2026-07-30T15:21:43.352603-04:00",
+    "provider": "senamhi",
+    "endpoint": "ediario",
+    "duration_ms": 1180.4,
+    "size_bytes": 72386,
+    "changed": false,
+    "success": true
+  },
+  {
+    "timestamp": "2026-07-30T15:27:57.645451-04:00",
+    "provider": "senamhi",
+    "endpoint": "diario",
+    "duration_ms": 1598.2,
+    "size_bytes": 32962,
+    "changed": false,
+    "success": true
+  },
+  {
+    "timestamp": "2026-07-30T15:27:57.653295-04:00",
+    "provider": "senamhi",
+    "endpoint": "ediario",
+    "duration_ms": 1211.0,
+    "size_bytes": 72386,
+    "changed": false,
+    "success": true
+  }
+]

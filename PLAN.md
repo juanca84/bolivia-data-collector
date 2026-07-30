@@ -103,50 +103,50 @@ config/
 
 providers/
 │
-├── base.py
-│
 └── senamhi/
     │
     ├── __init__.py
-    ├── provider.py
-    │
-    └── endpoints/
-        ├── diario.py
-        └── ediario.py
+    ├── collector.py
+    ├── diario.py
+    └── ediario.py
 
 storage/
 │
-├── writer.py
-├── comparator.py
-└── history.py
-
-models/
+└── json_storage.py
 
 utils/
 │
-└── helpers.py
-
-logging/
-│
-└── logger.py
+├── __init__.py
+├── helpers.py
+├── logger.py
+└── metrics.py
 
 data/
 │
-└── senamhi/
-    │
-    ├── latest/
-    │   ├── diario.json
-    │   └── ediario.json
-    │
-    └── history/
-        └── 2026/
-            └── 07/
-                └── 29/
-                    └── 080000/
-                        ├── diario.json
-                        └── ediario.json
+├── senamhi/
+│   │
+│   ├── latest/
+│   │   ├── diario.json
+│   │   └── ediario.json
+│   │
+│   └── history/
+│       └── YYYY/
+│           └── MM/
+│               └── DD/
+│                   └── HHMMSS/
+│                       ├── diario.json
+│                       └── ediario.json
+│
+└── metrics/
+    └── metrics.json
 
 tests/
+│
+├── __init__.py
+├── conftest.py
+├── test_collector.py
+├── test_endpoints.py
+└── test_storage.py
 
 main.py
 
@@ -559,6 +559,62 @@ snis/
 
 Sin modificar la arquitectura.
 
+### Cómo agregar un nuevo Provider
+
+1. Crear carpeta `providers/<nombre>/`
+2. Crear endpoints (ej. `providers/<nombre>/diario.py`):
+   ```python
+   from config.settings import DEFAULT_TIMEOUT
+   from utils.helpers import retry
+   from utils.logger import logger
+
+   @retry
+   def fetch(client) -> dict:
+       logger.info("Descargando <nombre>")
+       response = client.get("URL", timeout=DEFAULT_TIMEOUT)
+       response.raise_for_status()
+       data = response.json()
+       if not data:
+           raise ValueError("Respuesta vacía")
+       return data
+   ```
+3. Crear `collector.py`:
+   ```python
+   import time
+   from providers.base import ProviderBase
+   from providers.<nombre> import diario, ediario
+   from utils.logger import logger
+
+   class <Nombre>Provider(ProviderBase):
+       def run_all(self) -> dict:
+           logger.info("Ejecutando <NOMBRE>")
+           results = {}
+           with httpx.Client() as client:
+               for name, fetch_fn in [("diario", diario.fetch)]:
+                   start = time.perf_counter()
+                   try:
+                       data = fetch_fn(client)
+                       elapsed = (time.perf_counter() - start) * 1000
+                       results[name] = {"success": True, "data": data, "duration_ms": elapsed}
+                   except Exception as e:
+                       elapsed = (time.perf_counter() - start) * 1000
+                       logger.error("Error en %s: %s", name, e)
+                       results[name] = {"success": False, "error": str(e), "duration_ms": elapsed}
+           return results
+   ```
+4. Registrar en `providers/__init__.py`:
+   ```python
+   from providers.<nombre>.collector import <Nombre>Provider
+
+   PROVIDERS = {
+       "senamhi": SenamhiProvider,
+       "<nombre>": <Nombre>Provider,
+   }
+   ```
+5. Opcional: agregar URL y timeout específicos en `config/settings.py`.
+
+El `main.py` no necesita modificaciones. El workflow de GitHub Actions tampoco.
+
 ---
 
 ## Sprint 10 — Observabilidad
@@ -597,7 +653,7 @@ Este Provider servirá como plantilla para futuras integraciones con institucion
 | **4 — Validación** | ✅ |
 | **5 — Storage** | ✅ |
 | **6 — Logs** | ✅ |
-| **7 — GitHub Actions** | ❌ |
-| **8 — Testing** | ❌ |
-| **9 — Escalabilidad** | ❌ |
-| **10 — Observabilidad** | ❌ |
+| **7 — GitHub Actions** | ✅ |
+| **8 — Testing** | ✅ |
+| **9 — Escalabilidad** | ✅ (base class + registro + docs) |
+| **10 — Observabilidad** | ✅ |

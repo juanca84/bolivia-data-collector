@@ -1,10 +1,13 @@
+import time
+
 import httpx
 
+from providers.base import ProviderBase
 from providers.senamhi import diario, ediario
 from utils.logger import logger
 
 
-class SenamhiProvider:
+class SenamhiProvider(ProviderBase):
 
     def run_all(self) -> dict:
         logger.info("Ejecutando SENAMHI")
@@ -18,11 +21,14 @@ class SenamhiProvider:
             ]
 
             for name, fetch_fn in endpoints:
+                start = time.perf_counter()
                 try:
                     data = fetch_fn(client)
-                    results[name] = {"success": True, "data": data}
+                    elapsed = (time.perf_counter() - start) * 1000
+                    results[name] = {"success": True, "data": data, "duration_ms": elapsed}
                 except Exception as e:
+                    elapsed = (time.perf_counter() - start) * 1000
                     logger.error("Error en %s: %s", name, e)
-                    results[name] = {"success": False, "error": str(e)}
+                    results[name] = {"success": False, "error": str(e), "duration_ms": elapsed}
 
         return results

@@ -11,7 +11,7 @@ BASE_DIR = Path("data")
 
 class JsonStorage:
 
-    def save(self, provider_name: str, endpoint: str, data: dict | list, run_at: datetime | None = None) -> None:
+    def save(self, provider_name: str, endpoint: str, data: dict | list, run_at: datetime | None = None) -> bool:
         latest_dir = BASE_DIR / provider_name / "latest"
         latest_dir.mkdir(parents=True, exist_ok=True)
         latest_path = latest_dir / f"{endpoint}.json"
@@ -20,7 +20,7 @@ class JsonStorage:
 
         if old_data is not None and old_data == data:
             logger.info("Sin cambios en %s/%s", provider_name, endpoint)
-            return
+            return False
 
         now = run_at or datetime.now(ZoneInfo("America/La_Paz"))
         history_path = (
@@ -36,6 +36,7 @@ class JsonStorage:
         self._write(latest_path, data)
         self._write(history_path, data)
         logger.info("Guardado %s (nuevo historial)", latest_path)
+        return True
 
     def _load(self, path: Path):
         if not path.exists():
