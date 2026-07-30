@@ -19,9 +19,7 @@ jobs:
 
       - run: python main.py
 
-      - run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add data/
-          git diff --cached --quiet || git commit -m "data: update $(TZ=America/La_Paz date '+%Y-%m-%d %H:%M')"
-          git push
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "data: update"
+          file_pattern: data/
