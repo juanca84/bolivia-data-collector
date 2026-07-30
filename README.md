@@ -7,9 +7,6 @@ Plataforma automatizada para recolectar, versionar y almacenar datos públicos d
 | Provider | Estado | Endpoints |
 |---|---|---|
 | SENAMHI | ✅ | diario, ediario |
-| BCB | ❌ | — |
-| INE | ❌ | — |
-| SNIS | ❌ | — |
 
 ## Uso
 

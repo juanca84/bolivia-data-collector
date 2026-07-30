@@ -583,3 +583,21 @@ El primer Provider será **SENAMHI**, iniciando con los endpoints:
 - `/api/pronostico/ediario`
 
 Este Provider servirá como plantilla para futuras integraciones con instituciones como BCB, INE, SNIS y otras APIs públicas.
+
+---
+
+# Sprint Status
+
+| Sprint | Estado |
+|---|---|
+| **0 — Diseño** | ✅ |
+| **1 — Inicialización** | ✅ |
+| **2 — Configuración** | ✅ |
+| **3 — Provider SENAMHI** | ✅ |
+| **4 — Validación** | ✅ |
+| **5 — Storage** | ✅ |
+| **6 — Logs** | ✅ |
+| **7 — GitHub Actions** | ❌ |
+| **8 — Testing** | ❌ |
+| **9 — Escalabilidad** | ❌ |
+| **10 — Observabilidad** | ❌ |
