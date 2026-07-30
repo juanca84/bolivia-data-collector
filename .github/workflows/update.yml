@@ -19,7 +19,10 @@ jobs:
 
       - run: python main.py
 
+      - name: Set commit message
+        run: echo "COMMIT_MSG=data: update $(TZ=America/La_Paz date +'%Y-%m-%d %H:%M')" >> "$GITHUB_ENV"
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "data: update"
+          commit_message: "${{ env.COMMIT_MSG }}"
           file_pattern: data/
