@@ -196,5 +196,23 @@
     "size_bytes": 72497,
     "changed": true,
     "success": true
+  },
+  {
+    "timestamp": "2026-08-07T06:04:04.050045-04:00",
+    "provider": "senamhi",
+    "endpoint": "diario",
+    "duration_ms": 1102.4,
+    "size_bytes": 33114,
+    "changed": true,
+    "success": true
+  },
+  {
+    "timestamp": "2026-08-07T06:04:04.056561-04:00",
+    "provider": "senamhi",
+    "endpoint": "ediario",
+    "duration_ms": 1097.7,
+    "size_bytes": 72469,
+    "changed": true,
+    "success": true
   }
 ]
