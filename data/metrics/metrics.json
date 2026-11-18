@@ -2050,5 +2050,23 @@
     "size_bytes": 71111,
     "changed": true,
     "success": true
+  },
+  {
+    "timestamp": "2026-11-18T13:53:13.322382-04:00",
+    "provider": "senamhi",
+    "endpoint": "diario",
+    "duration_ms": 3536.7,
+    "size_bytes": 33156,
+    "changed": true,
+    "success": true
+  },
+  {
+    "timestamp": "2026-11-18T13:53:13.333749-04:00",
+    "provider": "senamhi",
+    "endpoint": "ediario",
+    "duration_ms": 902.9,
+    "size_bytes": 70138,
+    "changed": true,
+    "success": true
   }
 ]
